@@ -1,46 +1,5 @@
 /* app.js */
-const menuData = [
-    {
-        id: 'original',
-        nombre: '1. La Original',
-        desc: 'Nuestra torta clásica con nuestra receta original de carnes frías. Incluye aguacate, cebolla morada, tomate, lechuga, queso y mayo.',
-        precios: [
-            { nombre: '3 Rebanadas', precio: 14 },
-            { nombre: '6 Rebanadas', precio: 16 },
-            { nombre: '10 Rebanadas', precio: 17 }
-        ]
-    },
-    {
-        id: 'pavo',
-        nombre: '2. Pavo',
-        desc: 'Una opción más ligera pero igual de deliciosa con exquisito jamón de pavo. Incluye vegetales frescos.',
-        precios: [
-            { nombre: '3 Rebanadas', precio: 14 },
-            { nombre: '6 Rebanadas', precio: 16 },
-            { nombre: '10 Rebanadas', precio: 17 }
-        ]
-    },
-    {
-        id: 'puerco',
-        nombre: '3. Puerco',
-        desc: 'Para los que buscan un sabor más intenso con nuestro jamón de puerco horneado y vegetales frescos.',
-        precios: [
-            { nombre: '3 Rebanadas', precio: 14 },
-            { nombre: '6 Rebanadas', precio: 16 },
-            { nombre: '10 Rebanadas', precio: 17 }
-        ]
-    },
-    {
-        id: 'camarones-jamon',
-        nombre: '4. Camarones con Jamón',
-        desc: 'Una deliciosa combinación de mar y tierra con jugosos camarones, nuestro tradicional jamón y vegetales frescos.',
-        precios: [
-            { nombre: '3', precio: 15 },
-            { nombre: '6 Rebanadas', precio: 17 },
-            { nombre: '10 Rebanadas', precio: 18 }
-        ]
-    }
-];
+// Menú ahora es estático. No necesitamos menuData.
 
 let cart = [];
 const phone_number = '2109900532'; // Placeholder para el número de Texas
@@ -65,42 +24,19 @@ const locationStatus = document.getElementById('location-status');
 const waitTimeDisplay = document.getElementById('wait-time-display');
 
 function init() {
-    renderMenu();
     setupEventListeners();
 }
 
-function renderMenu() {
-    menuData.forEach((producto) => {
-        const card = document.createElement('div');
-        card.className = 'product-card';
+// Menú estático renderizado en HTML
 
-        let optionsHtml = '';
-        producto.precios.forEach(p => {
-            optionsHtml += `<option value="${p.precio}">${p.nombre} - $${p.precio}</option>`;
-        });
-
-        card.innerHTML = `
-            <h3 class="product-title">${producto.nombre}</h3>
-            <p class="product-desc">${producto.desc}</p>
-            <div class="product-includes">✅ Incluye Chips y Refresco</div>
-            <select class="size-selector" id="select-${producto.id}">
-                ${optionsHtml}
-            </select>
-            <button class="add-to-cart" onclick="addToCart('${producto.id}')">Agregar al Pedido</button>
-        `;
-        menuContainer.appendChild(card);
-    });
-}
-
-function addToCart(productoId) {
-    const producto = menuData.find(p => p.id === productoId);
+function addToCart(productoId, productoNombre) {
     const selectEl = document.getElementById(`select-${productoId}`);
     const selectedOption = selectEl.options[selectEl.selectedIndex];
-
+    
     const item = {
         id: Date.now(),
-        productoId: producto.id,
-        nombre: producto.nombre,
+        productoId: productoId,
+        nombre: productoNombre,
         tamano: selectedOption.text.split(' - ')[0],
         precio: parseFloat(selectedOption.value)
     };

@@ -23,7 +23,57 @@
         </section>
 
         <section class="menu" id="menu-container">
-            <!-- Productos renderizados por JS -->
+            <!-- Torta 1: La Original -->
+            <div class="product-card">
+                <h3 class="product-title">1. La Original</h3>
+                <p class="product-desc">Nuestra torta clásica con receta original de carnes frías. Incluye aguacate, cebolla, tomate, lechuga, queso y mayo.</p>
+                <div class="product-includes">✅ Incluye Chips y Refresco</div>
+                <select class="size-selector" id="select-original">
+                    <option value="14">3 Rebanadas - $14</option>
+                    <option value="16">6 Rebanadas - $16</option>
+                    <option value="17">10 Rebanadas - $17</option>
+                </select>
+                <button class="add-to-cart" onclick="addToCart('original', '1. La Original')">Agregar al Pedido</button>
+            </div>
+
+            <!-- Torta 2: Pavo -->
+            <div class="product-card">
+                <h3 class="product-title">2. Pavo</h3>
+                <p class="product-desc">Una opción más ligera pero igual de deliciosa con exquisito jamón de pavo. Incluye vegetales frescos.</p>
+                <div class="product-includes">✅ Incluye Chips y Refresco</div>
+                <select class="size-selector" id="select-pavo">
+                    <option value="14">3 Rebanadas - $14</option>
+                    <option value="16">6 Rebanadas - $16</option>
+                    <option value="17">10 Rebanadas - $17</option>
+                </select>
+                <button class="add-to-cart" onclick="addToCart('pavo', '2. Pavo')">Agregar al Pedido</button>
+            </div>
+
+            <!-- Torta 3: Puerco -->
+            <div class="product-card">
+                <h3 class="product-title">3. Puerco</h3>
+                <p class="product-desc">Para los que buscan un sabor más intenso con nuestro jamón de puerco horneado y vegetales frescos.</p>
+                <div class="product-includes">✅ Incluye Chips y Refresco</div>
+                <select class="size-selector" id="select-puerco">
+                    <option value="14">3 Rebanadas - $14</option>
+                    <option value="16">6 Rebanadas - $16</option>
+                    <option value="17">10 Rebanadas - $17</option>
+                </select>
+                <button class="add-to-cart" onclick="addToCart('puerco', '3. Puerco')">Agregar al Pedido</button>
+            </div>
+
+            <!-- Torta 4: Camarones con Jamón -->
+            <div class="product-card">
+                <h3 class="product-title">4. Camarones con Jamón</h3>
+                <p class="product-desc">Una deliciosa combinación de mar y tierra con jugosos camarones, nuestro tradicional jamón y vegetales frescos.</p>
+                <div class="product-includes">✅ Incluye Chips y Refresco</div>
+                <select class="size-selector" id="select-camarones">
+                    <option value="15">3 Rebanadas - $15</option>
+                    <option value="17">6 Rebanadas - $17</option>
+                    <option value="18">10 Rebanadas - $18</option>
+                </select>
+                <button class="add-to-cart" onclick="addToCart('camarones', '4. Camarones con Jamón')">Agregar al Pedido</button>
+            </div>
         </section>
     </main>
 
