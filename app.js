@@ -35,9 +35,9 @@ const menuData = [
         nombre: '4. Camarones con Jamón',
         desc: 'Una deliciosa combinación de mar y tierra con jugosos camarones, nuestro tradicional jamón y vegetales frescos.',
         precios: [
-            { nombre: '3 Rebanadas', precio: 15 },
-            { nombre: '6 Rebanadas', precio: 17 },
-            { nombre: '10 Rebanadas', precio: 18 }
+
+            { nombre: '3 Rebanadas y 5 camarones', precio: 17 },
+            { nombre: '6  y 10 camarones', precio: 18 }
         ]
     }
 ];
@@ -73,7 +73,7 @@ function renderMenu() {
     menuData.forEach((producto) => {
         const card = document.createElement('div');
         card.className = 'product-card';
-        
+
         let optionsHtml = '';
         producto.precios.forEach(p => {
             optionsHtml += `<option value="${p.precio}">${p.nombre} - $${p.precio}</option>`;
@@ -96,7 +96,7 @@ function addToCart(productoId) {
     const producto = menuData.find(p => p.id === productoId);
     const selectEl = document.getElementById(`select-${productoId}`);
     const selectedOption = selectEl.options[selectEl.selectedIndex];
-    
+
     const item = {
         id: Date.now(),
         productoId: producto.id,
@@ -107,7 +107,7 @@ function addToCart(productoId) {
 
     cart.push(item);
     updateCart();
-    
+
     // Animación simple del carrito
     cartIcon.style.transform = 'scale(1.2)';
     setTimeout(() => cartIcon.style.transform = 'scale(1)', 200);
@@ -125,7 +125,7 @@ window.removeFromCart = removeFromCart;
 
 function updateCart() {
     cartCount.innerText = cart.length;
-    
+
     if (cart.length === 0) {
         cartItemsContainer.innerHTML = '<p class="empty-cart">Tu carrito está vacío 🥺</p>';
         cartTotal.innerText = '$0.00';
@@ -229,7 +229,7 @@ function generarWhatsApp() {
     let mensaje = `*NUEVO PEDIDO - TORTAS TORTUGA* 🐢%0A`;
     mensaje += `*Cliente:* ${nombre}%0A`;
     if (telefono) mensaje += `*Teléfono:* ${telefono}%0A`;
-    
+
     const tipoTexto = currentOrderType === 'delivery' ? 'Entrega a Domicilio' : 'Recoger en Tienda';
     const tiempoEspera = currentOrderType === 'delivery' ? '45 minutos' : '20 minutos';
     mensaje += `*Tipo:* ${tipoTexto}%0A`;
@@ -248,7 +248,7 @@ function generarWhatsApp() {
 
     mensaje += `%0A*TOTAL: $${total.toFixed(2)}*%0A`;
     mensaje += `_Todos los combos incluyen Chips y Refresco._%0A%0A`;
-    
+
     if (currentOrderType === 'delivery') {
         mensaje += `_Nota: Por favor compárteme tu ubicación en tiempo real por aquí para rastrear a mi repartidor._%0A%0A`;
     }
@@ -256,7 +256,7 @@ function generarWhatsApp() {
     mensaje += `¿Cómo te gustaría pagar? (Zelle, Cash App o Efectivo al entregar)`;
 
     const url = `https://wa.me/${phone_number}?text=${mensaje}`;
-    
+
     window.open(url, '_blank');
 }
 
