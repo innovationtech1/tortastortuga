@@ -35,9 +35,9 @@ const menuData = [
         nombre: '4. Camarones con Jamón',
         desc: 'Una deliciosa combinación de mar y tierra con jugosos camarones, nuestro tradicional jamón y vegetales frescos.',
         precios: [
-
-            { nombre: '3 Rebanadas y 5 camarones', precio: 17 },
-            { nombre: '6  y 10 camarones', precio: 18 }
+            { nombre: '3', precio: 15 },
+            { nombre: '6 Rebanadas', precio: 17 },
+            { nombre: '10 Rebanadas', precio: 18 }
         ]
     }
 ];
