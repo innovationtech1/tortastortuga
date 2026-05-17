@@ -33,7 +33,9 @@ const menuData = [
 ];
 
 let cart = [];
-const phone_number = '12100000000'; // Placeholder para el número de Texas
+const phone_number = '2109900532'; // Placeholder para el número de Texas
+let customerLocationUrl = '';
+let currentOrderType = 'pickup';
 
 // Elementos del DOM
 const menuContainer = document.getElementById('menu-container');
@@ -46,6 +48,11 @@ const cartTotal = document.getElementById('cart-total');
 const checkoutBtn = document.getElementById('checkout-btn');
 const customerNameInput = document.getElementById('customer-name');
 const customerPhoneInput = document.getElementById('customer-phone');
+const orderTypeRadios = document.getElementsByName('order-type');
+const locationSection = document.getElementById('location-section');
+const getLocationBtn = document.getElementById('get-location-btn');
+const locationStatus = document.getElementById('location-status');
+const waitTimeDisplay = document.getElementById('wait-time-display');
 
 function init() {
     renderMenu();
@@ -151,6 +158,41 @@ function setupEventListeners() {
         }
     });
 
+    orderTypeRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            currentOrderType = e.target.value;
+            if (currentOrderType === 'delivery') {
+                locationSection.style.display = 'block';
+                waitTimeDisplay.innerHTML = '⏱️ Tiempo estimado: <strong>45 minutos</strong>';
+            } else {
+                locationSection.style.display = 'none';
+                waitTimeDisplay.innerHTML = '⏱️ Tiempo estimado: <strong>20 minutos</strong>';
+            }
+        });
+    });
+
+    getLocationBtn.addEventListener('click', () => {
+        if (!navigator.geolocation) {
+            locationStatus.innerText = 'Tu navegador no soporta geolocalización.';
+            return;
+        }
+
+        locationStatus.innerText = 'Obteniendo ubicación...';
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                customerLocationUrl = `https://maps.google.com/?q=${lat},${lng}`;
+                locationStatus.innerText = 'Ubicación obtenida ✅';
+                locationStatus.style.color = 'green';
+            },
+            (error) => {
+                locationStatus.innerText = 'Error al obtener ubicación. Asegúrate de dar permisos.';
+                locationStatus.style.color = 'red';
+            }
+        );
+    });
+
     checkoutBtn.addEventListener('click', generarWhatsApp);
 }
 
@@ -168,10 +210,25 @@ function generarWhatsApp() {
         return;
     }
 
+    if (currentOrderType === 'delivery' && !customerLocationUrl) {
+        const confirmar = confirm('Aún no has compartido tu ubicación. ¿Quieres continuar sin enviarla? (Recomendamos enviarla para que el repartidor sepa a dónde ir)');
+        if (!confirmar) return;
+    }
+
     let total = 0;
     let mensaje = `*NUEVO PEDIDO - TORTAS TORTUGA* 🐢%0A`;
     mensaje += `*Cliente:* ${nombre}%0A`;
     if (telefono) mensaje += `*Teléfono:* ${telefono}%0A`;
+    
+    const tipoTexto = currentOrderType === 'delivery' ? 'Entrega a Domicilio' : 'Recoger en Tienda';
+    const tiempoEspera = currentOrderType === 'delivery' ? '45 minutos' : '20 minutos';
+    mensaje += `*Tipo:* ${tipoTexto}%0A`;
+    mensaje += `*Tiempo Estimado:* ${tiempoEspera}%0A`;
+
+    if (currentOrderType === 'delivery' && customerLocationUrl) {
+        mensaje += `*Ubicación de entrega:* ${customerLocationUrl}%0A`;
+    }
+
     mensaje += `%0A*Orden:*%0A`;
 
     cart.forEach(item => {
@@ -181,6 +238,11 @@ function generarWhatsApp() {
 
     mensaje += `%0A*TOTAL: $${total.toFixed(2)}*%0A`;
     mensaje += `_Todos los combos incluyen Chips y Refresco._%0A%0A`;
+    
+    if (currentOrderType === 'delivery') {
+        mensaje += `_Nota: Por favor compárteme tu ubicación en tiempo real por aquí para rastrear a mi repartidor._%0A%0A`;
+    }
+
     mensaje += `¿Cómo te gustaría pagar? (Zelle, Cash App o Efectivo al entregar)`;
 
     const url = `https://wa.me/${phone_number}?text=${mensaje}`;

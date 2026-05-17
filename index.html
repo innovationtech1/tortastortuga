@@ -46,6 +46,27 @@
                 <div class="checkout-form">
                     <input type="text" id="customer-name" placeholder="Tu Nombre" required>
                     <input type="tel" id="customer-phone" placeholder="Tu Teléfono (opcional)" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 1rem; font-family: inherit;">
+                    
+                    <div class="delivery-options">
+                        <label>
+                            <input type="radio" name="order-type" value="pickup" checked>
+                            Recoger en Tienda
+                        </label>
+                        <label>
+                            <input type="radio" name="order-type" value="delivery">
+                            Entrega a Domicilio
+                        </label>
+                    </div>
+
+                    <div id="location-section" style="display: none; margin-bottom: 1rem;">
+                        <button type="button" id="get-location-btn" class="location-btn">📍 Obtener mi ubicación actual</button>
+                        <p id="location-status" class="location-status"></p>
+                    </div>
+
+                    <div class="wait-time-estimate" id="wait-time-display">
+                        ⏱️ Tiempo estimado: <strong>20 minutos</strong>
+                    </div>
+
                     <button id="checkout-btn" class="whatsapp-btn">Pedir por WhatsApp 💬</button>
                 </div>
             </div>
